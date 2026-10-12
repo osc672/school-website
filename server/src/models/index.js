@@ -1,0 +1,14 @@
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
+const adminSchema = new Schema({ name:{type:String,required:true,trim:true}, email:{type:String,required:true,unique:true,lowercase:true,trim:true}, passwordHash:{type:String,required:true} },{timestamps:true});
+const heroSchema = new Schema({ title:{type:String,required:true,trim:true}, subtitle:{type:String,default:''}, imageUrl:{type:String,default:''}, buttonText:{type:String,default:'Explore our school'}, buttonUrl:{type:String,default:'#about'}, active:{type:Boolean,default:true}, order:{type:Number,default:0} },{timestamps:true});
+const teacherSchema = new Schema({ name:{type:String,required:true,trim:true}, role:{type:String,required:true,trim:true}, subject:{type:String,default:''}, bio:{type:String,default:''}, imageUrl:{type:String,default:''}, active:{type:Boolean,default:true} },{timestamps:true});
+const noticeSchema = new Schema({ title:{type:String,required:true,trim:true}, body:{type:String,required:true}, category:{type:String,default:'Announcement'}, publishAt:{type:Date,default:Date.now}, expiresAt:{type:Date}, active:{type:Boolean,default:true} },{timestamps:true});
+const inquirySchema = new Schema({ type:{type:String,enum:['admission','contact'],default:'contact'}, parentName:{type:String,required:true,trim:true}, studentName:{type:String,default:''}, email:{type:String,required:true,lowercase:true,trim:true}, phone:{type:String,default:''}, requestedClass:{type:String,default:''}, subject:{type:String,default:''}, message:{type:String,required:true}, status:{type:String,enum:['New','In Progress','Replied','Closed'],default:'New'}, read:{type:Boolean,default:false}, emailNotificationSent:{type:Boolean,default:false} },{timestamps:true});
+const settingsSchema = new Schema({ key:{type:String,unique:true,default:'main'}, schoolName:{type:String,default:'Little Stars International School'}, tagline:{type:String,default:'Big dreams begin with little steps.'}, phone:{type:String,default:''}, email:{type:String,default:''}, address:{type:String,default:''}, principalMessage:{type:String,default:''}, logoUrl:{type:String,default:''} },{timestamps:true});
+export const Admin = model('Admin',adminSchema);
+export const HeroSlide = model('HeroSlide',heroSchema);
+export const Teacher = model('Teacher',teacherSchema);
+export const Notice = model('Notice',noticeSchema);
+export const Inquiry = model('Inquiry',inquirySchema);
+export const SiteSettings = model('SiteSettings',settingsSchema);
